@@ -72,33 +72,18 @@ var site_99770_fn = {
 		var href_temp;
 		var title;
 		var page = 1;
-		function getNextImage(callback, next_url, photo_body){
-			$.get( next_url, function( data ) {
-				console.log(title," Page : ",page);
-				page++;
-				var new_span = $(data).filter("#photo_body");
-				var next_url = $(new_span).find("a").attr("href");
-				$(new_span).find("a").attr("href", "javascript:;");
-				var now_html = $(photo_body).html();
-				if(href_temp != next_url){
-					var new_img_src = $(new_span).find("img").attr("src");
-					img_array.push(new_img_src);
-					$(photo_body).html(now_html + new_span.html());
-					getNextImage(callback, next_url, photo_body);
-				}else{
-					callback();
-				}
-			});
-		}
 		$.get( request.data.url, function( index_data ) {
 			var photo_href = request.data.url;
 			
 			$.get( photo_href, function( data ) {
 				var title = $(data).find("#spt2").html();
-				console.log(title);
 				var img_array = data.match(/var sFiles="(.*)";var/i)[1].split("|");
+				var path = data.match(/var sPath="(\d*)";/i)[1];
+				if(path.length == 1){path = "0"+path}
+				path = "http://61.160.196.52:9728/dm"+path+"/";
+				console.log(path);
 				for(var i in img_array){
-					img_array[i] = "http://61.160.196.52:9728/dm12/"+img_array[i]
+					img_array[i] = path+img_array[i]
 				}
 				sendResponse({data:img_array, title:title, status: {type:"success"}});
 			});
