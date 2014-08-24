@@ -55,7 +55,7 @@ var site_99770_fn = {
 	getGallary:function(request, sender, sendResponse){
 		var gallary_object_array = [];
 		var ul = $("<ul class='gallary'>");
-		var source_list = $("#subBookListAct").find("div");
+		var source_list = $(".cVolList").find("div");
 		var img = $(".cDefaultImg img").attr("src");
 		$(source_list).each(function(index){
 			var name = $(this).find("a").first().html();
@@ -81,7 +81,6 @@ var site_99770_fn = {
 				var path = data.match(/var sPath="(\d*)";/i)[1];
 				if(path.length == 1){path = "0"+path}
 				path = "http://61.160.196.52:9728/dm"+path+"/";
-				console.log(path);
 				for(var i in img_array){
 					img_array[i] = path+img_array[i]
 				}
